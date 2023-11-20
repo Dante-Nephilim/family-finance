@@ -8,7 +8,7 @@ import {
 } from '../services/BudgetCategoryService';
 
 // Get all budgetCategories
-export const listBudgetCategorys = async (req: NextApiRequest, res: NextApiResponse) => {
+export const listBudgetCategories = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const budgetCategories = await getAllBudgetCategories();
     res.status(200).json(budgetCategories);

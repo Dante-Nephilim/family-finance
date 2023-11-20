@@ -23,9 +23,9 @@ export const listExpenses = async (req: NextApiRequest, res: NextApiResponse) =>
   
   // Update a expense
   export const editExpense = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { transactionId } = req.query;
+    const { expenseId } = req.query;
     try {
-      const expense = await updateExpense(parseInt(transactionId as string), req.body);
+      const expense = await updateExpense(parseInt(expenseId as string), req.body);
       res.status(200).json(expense);
     } catch (error) {
       res.status(500).json({ error: "Failed to update expense" });
@@ -34,9 +34,9 @@ export const listExpenses = async (req: NextApiRequest, res: NextApiResponse) =>
   
   // Delete a expense
   export const removeExpense = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { transactionId } = req.query;
+    const { expenseId } = req.query;
     try {
-      await deleteExpense(parseInt(transactionId as string));
+      await deleteExpense(parseInt(expenseId as string));
       res.status(200).json({ message: "Expense deleted successfully" });
     } catch (error) {
       res.status(500).json({ error: "Failed to delete expense" });
@@ -45,9 +45,9 @@ export const listExpenses = async (req: NextApiRequest, res: NextApiResponse) =>
   
   // Get a expense by ID
   export const getSingleExpense = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { transactionId } = req.query;
+    const { expenseId } = req.query;
     try {
-      const expense = await getExpenseById(parseInt(transactionId as string));
+      const expense = await getExpenseById(parseInt(expenseId as string));
       if (expense) {
         res.status(200).json(expense);
       } else {
