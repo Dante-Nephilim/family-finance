@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model IncomeCategory {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  incomes Income[]
+}
+
+model ExpenseCategory {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  expenses Expense[]
+}
+
+model Income {
+  id             Int            @id @default(autoincrement())
+  amount         Float
+  date           DateTime
+  categoryId     Int
+  incomeCategory IncomeCategory @relation(fields: [categoryId], references: [id])
+  transactions   Transaction[]
+}
+
+model Expense {
+  id              Int             @id @default(autoincrement())
+  amount          Float
+  date            DateTime
+  categoryId      Int
+  expenseCategory ExpenseCategory @relation(fields: [categoryId], references: [id])
+  transactions    Transaction[]
+}
+
+model BudgetCategory {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  budgets Budget[]
+}
+
+model Budget {
+  id              Int            @id @default(autoincrement())
+  totalAmount     Float
+  allocatedAmount Float
+  remainingAmount Float          @default(0)
+  categoryId      Int
+  budgetCategory  BudgetCategory @relation(fields: [categoryId], references: [id])
+  transactions    Transaction[]
+}
+
+model TransactionType {
+  id           Int           @id @default(autoincrement())
+  type         String        @unique
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  amount          Float
+  transactionDate DateTime
+  typeId          Int
+  transactionType TransactionType @relation(fields: [typeId], references: [id])
+  budgetId        Int
+  budget          Budget          @relation(fields: [budgetId], references: [id])
+  // Links to either income or expense
+  incomeId        Int?
+  income          Income?         @relation(fields: [incomeId], references: [id])
+  expenseId       Int?
+  expense         Expense?        @relation(fields: [expenseId], references: [id])
+}
