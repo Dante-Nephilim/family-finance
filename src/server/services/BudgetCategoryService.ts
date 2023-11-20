@@ -1,4 +1,3 @@
-// server/services/BudgetCategoryService.ts
 import { PrismaClient,BudgetCategory } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -13,4 +12,18 @@ export const createBudgetCategory = async (data: BudgetCategory): Promise<Budget
   });
 };
 
-// Add additional methods (update, delete) as needed
+export const updateBudgetCategory = async (budgetCategoryId: number, data: BudgetCategory): Promise<BudgetCategory> =>{
+  return await prisma.budgetCategory.update({
+    where:{id:budgetCategoryId},
+    data,
+  })
+};
+
+export const deleteBudgetCategory = async(budgetCategoryId:number):Promise<BudgetCategory> => {
+  return await prisma.budgetCategory.delete({where:{id:budgetCategoryId}});
+};
+
+export const getBudgetCategoryById = async(budgetId:number):Promise<BudgetCategory | null> => {
+  return await prisma.budgetCategory.findUnique({where:{id:budgetId}})
+};
+

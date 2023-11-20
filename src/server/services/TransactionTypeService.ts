@@ -1,4 +1,3 @@
-// server/services/TransactionTypeService.ts
 import { PrismaClient,TransactionType } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -13,4 +12,17 @@ export const createTransactionType = async (data: TransactionType): Promise<Tran
   });
 };
 
-// Add additional methods (update, delete) as needed
+export const updateTransactionType = async(transactionTypeId:number, data:TransactionType) =>{
+  return await prisma.transactionType.update({where:{id: transactionTypeId}, data});
+}
+
+export const  deleteTransactionType = async(transactionTypeId:number) => {
+  return await prisma.transactionType.delete({ where: { id: transactionTypeId } });
+}
+
+export const getTransactionTypeById = async(transactionTypeId:number) => {
+  return await prisma.transactionType.findUnique({
+    where:{id: transactionTypeId}
+    })
+};
+

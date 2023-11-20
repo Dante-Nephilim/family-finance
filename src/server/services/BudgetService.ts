@@ -1,4 +1,3 @@
-// server/services/BudgetService.ts
 import { PrismaClient,Budget } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -30,4 +29,9 @@ export const updateBudget = async(budgetId:number,data:Budget):Promise<Budget> =
   })
 }
 
-// Add additional methods (update, delete) as needed
+export const getBudgetById = async(budgetId:number):Promise<Budget | null> =>{
+  return await prisma.budget.findUnique({
+    where:{id:budgetId}
+    })
+};
+
