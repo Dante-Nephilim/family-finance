@@ -27,28 +27,58 @@ const Home: React.FC<HomeProps> = ({ initialData }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const budgetCategories = await fetchBudgetCategories();
-  const budgets = await fetchBudgets();
-  const incomeCategories = await fetchIncomeCategories();
-  const incomes = await fetchIncomes();
-  const expenses = await fetchExpenses();
-  const expenseCategories = await fetchExpenseCategories();
-  const transactions = await fetchTransactions();
-  const transactionTypes = await fetchTransactionTypes();
-  return {
-    props: {
-      initialData: {
-        budgetCategories,
-        budgets,
-        incomeCategories,
-        incomes,
-        expenses,
-        expenseCategories,
-        transactionTypes,
-        transactions,
+  try {
+    const [
+      budgetCategories,
+      budgets,
+      incomeCategories,
+      incomes,
+      expenses,
+      expenseCategories,
+      transactions,
+      transactionTypes,
+    ] = await Promise.all([
+      fetchBudgetCategories(),
+      fetchBudgets(),
+      fetchIncomeCategories(),
+      fetchIncomes(),
+      fetchExpenses(),
+      fetchExpenseCategories(),
+      fetchTransactions(),
+      fetchTransactionTypes(),
+    ]);
+
+    return {
+      props: {
+        initialData: {
+          budgetCategories,
+          budgets,
+          incomeCategories,
+          incomes,
+          expenses,
+          expenseCategories,
+          transactions,
+          transactionTypes,
+        },
       },
-    },
-  };
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        initialData: {
+          budgetCategories: [],
+          budgets: [],
+          incomeCategories: [],
+          incomes: [],
+          expenses: [],
+          expenseCategories: [],
+          transactions: [],
+          transactionTypes: [],
+        },
+      },
+    };
+  }
 };
 
 export default Home;
