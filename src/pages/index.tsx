@@ -11,6 +11,12 @@ import { fetchExpenses } from "@/serverFunctions/fetchExpenses";
 import { fetchExpenseCategories } from "@/serverFunctions/fetchexpenseCategories";
 import { fetchTransactions } from "@/serverFunctions/fetchTransactions";
 import { fetchTransactionTypes } from "@/serverFunctions/fetchTransactionTypes";
+import TransactionList from "@/components/transactions/TransactionList/TransactionList";
+import IncomeList from "@/components/incomes/IncomeList/IncomeList";
+import ExpenseList from "@/components/expenses/ExpenseList/ExpenseList";
+import TransactionTypeList from "@/components/transactionTypes/TransactionTypeList/TransactionTypeList";
+import IncomeCategoryList from "@/components/incomeCategories/IncomeCategoryList/IncomeCategoryList";
+import ExpenseCategoryList from "@/components/expenseCategories/ExpenseCategoryList/ExpenseCategoryList";
 
 interface HomeProps {
   initialData: {
@@ -22,6 +28,13 @@ const Home: React.FC<HomeProps> = ({ initialData }) => {
   return (
     <DataProvider initialData={initialData}>
       <BudgetCategoryList />
+      <TransactionList />
+      <IncomeList />
+      <ExpenseList />
+      <BudgetCategoryList />
+      <TransactionTypeList />
+      <IncomeCategoryList />
+      <ExpenseCategoryList />
     </DataProvider>
   );
 };

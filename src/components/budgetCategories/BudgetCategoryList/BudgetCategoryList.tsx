@@ -1,4 +1,3 @@
-// src/components/BudgetCategoryList.tsx
 import React from "react";
 import { useDataContext } from "@/hooks/useDataContext";
 import { BudgetCategory } from "@prisma/client";
@@ -9,6 +8,7 @@ const BudgetCategoryList: React.FC = () => {
 
   return (
     <div>
+      <h1>BudgetCategories</h1>
       {budgetCategories.map((category: BudgetCategory) => (
         <div key={category.id}>
           {category.id} {category.name}
